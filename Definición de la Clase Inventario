@@ -1,0 +1,58 @@
+import json
+
+class Inventario:
+    def __init__(self):
+        self.productos = {}
+
+    def añadir_producto(self, producto):
+        if producto.id_producto in self.productos:
+            print(f"El producto con ID {producto.id_producto} ya existe.")
+        else:
+            self.productos[producto.id_producto] = producto
+            print(f"Producto {producto.nombre} añadido al inventario.")
+
+    def eliminar_producto(self, id_producto):
+        if id_producto in self.productos:
+            del self.productos[id_producto]
+            print(f"Producto con ID {id_producto} eliminado del inventario.")
+        else:
+            print(f"No se encontró el producto con ID {id_producto}.")
+
+    def actualizar_producto(self, id_producto, cantidad=None, precio=None):
+        if id_producto in self.productos:
+            producto = self.productos[id_producto]
+            if cantidad is not None:
+                producto.cantidad = cantidad
+            if precio is not None:
+                producto.precio = precio
+            print(f"Producto con ID {id_producto} actualizado.")
+        else:
+            print(f"No se encontró el producto con ID {id_producto}.")
+
+    def buscar_producto(self, nombre):
+        for producto in self.productos.values():
+            if producto.nombre.lower() == nombre.lower():
+                print(producto)
+                return producto
+        print(f"No se encontró ningún producto con el nombre '{nombre}'.")
+
+    def mostrar_todos(self):
+        if self.productos:
+            for producto in self.productos.values():
+                print(producto)
+        else:
+            print("El inventario está vacío.")
+
+    def guardar_en_archivo(self, archivo):
+        with open(archivo, 'w') as file:
+            json.dump({id_producto: producto.__dict__ for id_producto, producto in self.productos.items()}, file)
+            print(f"Inventario guardado en {archivo}.")
+
+    def cargar_desde_archivo(self, archivo):
+        try:
+            with open(archivo, 'r') as file:
+                productos_cargados = json.load(file)
+                self.productos = {id_producto: Producto(**producto) for id_producto, producto in productos_cargados.items()}
+                print(f"Inventario cargado desde {archivo}.")
+        except FileNotFoundError:
+            print(f"El archivo {archivo} no se encontró.")
