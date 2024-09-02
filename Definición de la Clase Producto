@@ -1,0 +1,38 @@
+class Producto:
+    def __init__(self, id_producto, nombre, cantidad, precio):
+        self._id_producto = id_producto  # ID único
+        self._nombre = nombre
+        self._cantidad = cantidad
+        self._precio = precio
+
+    # Métodos para obtener y establecer los atributos
+    @property
+    def id_producto(self):
+        return self._id_producto
+
+    @property
+    def nombre(self):
+        return self._nombre
+
+    @nombre.setter
+    def nombre(self, nombre):
+        self._nombre = nombre
+
+    @property
+    def cantidad(self):
+        return self._cantidad
+
+    @cantidad.setter
+    def cantidad(self, cantidad):
+        self._cantidad = cantidad
+
+    @property
+    def precio(self):
+        return self._precio
+
+    @precio.setter
+    def precio(self, precio):
+        self._precio = precio
+
+    def __str__(self):
+        return f"ID: {self._id_producto}, Nombre: {self._nombre}, Cantidad: {self._cantidad}, Precio: {self._precio}"
